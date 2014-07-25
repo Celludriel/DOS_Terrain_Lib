@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DosTerrainParser.cs" />
     <Compile Include="Model\DosTerrain.cs" />
+    <Compile Include="Model\Intensity.cs" />
     <Compile Include="Model\LayerType.cs" />
     <Compile Include="Model\Triangle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

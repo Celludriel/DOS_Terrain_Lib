@@ -11,6 +11,7 @@ namespace DosTerrainLib.Model
     {
         public UInt32 HeightMapLength;
         public float[] HeightMapData;
+        public LayerType backgroundLayer;
         public List<LayerType> Layers;
     }
 }

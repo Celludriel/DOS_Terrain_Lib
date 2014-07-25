@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib.Model
 {
-    class LayerType
+    class Intensity
     {
-        public UInt32 index = 999;
-        public Triangle[] Triangles;
-        public Intensity[] Intensities;
+        public byte value1;
+        public byte value2;
+        public byte value3;
+        public byte value4;
     }
 }
