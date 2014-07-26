@@ -10,7 +10,7 @@ namespace DosTerrainLib
 {
     class DosTerrainParser
     {
-        public DosTerrain readDosTerrain(UInt32 width, UInt32 height, string filename)
+        public DosTerrain ReadDosTerrain(UInt32 width, UInt32 height, string filename)
         {
             UInt32 x = width / 2;
             UInt32 y = height / 2;
@@ -54,9 +54,9 @@ namespace DosTerrainLib
             LayerType layer = new LayerType();
             if (!background)
             {
-                layer.index = dosBinaryReader.ReadUInt32();
+                layer.Index = dosBinaryReader.ReadUInt32();
             }
-            Console.WriteLine("Start reading layer at index: " + layer.index);
+            Console.WriteLine("Start reading layer at index: " + layer.Index);
 
             UInt32 maxTriangles = dosBinaryReader.ReadUInt32() / 12;
             Console.WriteLine("Reading " + maxTriangles + " triangles");
@@ -75,7 +75,7 @@ namespace DosTerrainLib
                 Intensity intensity = ReadIntensity(dosBinaryReader);
                 layer.Intensities[i] = intensity;
             }
-            Console.WriteLine("End reading layer at index: " + layer.index);
+            Console.WriteLine("End reading layer at index: " + layer.Index);
             return layer;
         }
 
@@ -107,7 +107,7 @@ namespace DosTerrainLib
             UInt32 calculatedSizeFromParameters = (maxTiles * 4);
             if (heightmapSize == calculatedSizeFromParameters)
             {
-                terrain.HeightMapLength = heightmapSize;
+                terrain.HeightMapSize = heightmapSize;
                 terrain.HeightMapData = new float[maxTiles];
                 for (int i = 0; i < maxTiles; i++)
                 {
@@ -124,15 +124,17 @@ namespace DosTerrainLib
         private static void ReadToEndOfFile(BinaryReader dosBinaryReader)
         {
             // temporary since I'm writing this parser in parts I just want to know if I'm going out of bounds or something else worse
+            int amountOfExtraReads = 0;
             while (true)
             {
                 try
                 {
                     dosBinaryReader.ReadUInt32();
+                    amountOfExtraReads++;
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("End of File Reached");
+                    Console.WriteLine("End of File Reached, " + amountOfExtraReads + " extra reads");
                     break;
                 }
             }

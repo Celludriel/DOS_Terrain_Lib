@@ -9,9 +9,8 @@ namespace DosTerrainLib.Model
 {
     class DosTerrain
     {
-        public UInt32 HeightMapLength;
+        public UInt32 HeightMapSize;
         public float[] HeightMapData;
-        public LayerType backgroundLayer;
         public List<LayerType> Layers;
     }
 }

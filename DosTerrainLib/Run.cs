@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DosTerrainLib.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,16 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_001.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_002.data";
+            String pathToOutputTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_002_out.data";
 
             DosTerrainParser parser = new DosTerrainParser();
-            parser.readDosTerrain(64,64,pathToTestFile);
+            DosTerrain terrain = parser.ReadDosTerrain(100,100,pathToTestFile);
+
+            DosTerrainWriter writer = new DosTerrainWriter();
+            writer.WriteDosTerrain(terrain, pathToOutputTestFile);
+
+            terrain = parser.ReadDosTerrain(100, 100, pathToOutputTestFile);
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");

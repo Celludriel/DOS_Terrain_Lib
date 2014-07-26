@@ -8,7 +8,7 @@ namespace DosTerrainLib.Model
 {
     class LayerType
     {
-        public UInt32 index = 999;
+        public UInt32 Index = 999;
         public Triangle[] Triangles;
         public Intensity[] Intensities;
     }
