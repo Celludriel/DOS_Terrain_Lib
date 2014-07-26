@@ -33,6 +33,10 @@
     <StartupObject>DosTerrainLib.Run</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,12 +52,16 @@
     <Compile Include="Model\Intensity.cs" />
     <Compile Include="Model\LayerType.cs" />
     <Compile Include="Model\Triangle.cs" />
+    <Compile Include="NUnit\DosTerrainParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Run.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestData\Terrain_000.data" />
     <None Include="TestData\Terrain_001.data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\nunit.framework.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
