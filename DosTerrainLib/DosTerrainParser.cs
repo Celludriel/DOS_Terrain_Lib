@@ -28,8 +28,9 @@ namespace DosTerrainLib
                 {
                     ReadHeightMapData(x, y, terrain, dosBinaryReader);
 
-                    char[] padding = dosBinaryReader.ReadChars(17);
+                    char[] padding = dosBinaryReader.ReadChars(16);
 
+                    terrain.Layers = new List<LayerType>();
                     LayerType backGroundLayer = ReadLayerType(dosBinaryReader, true);
                     terrain.Layers.Add(backGroundLayer);
 
