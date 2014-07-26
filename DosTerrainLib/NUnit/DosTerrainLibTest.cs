@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using DosTerrainLib.Model;
+using System.IO;
 
 namespace DosTerrainLib.NUnit
 {    
     [TestFixture]
-    class DosTerrainParserTest
+    class DosTerrainLibTest
     {
         [Test]
         public void parser100By100NoExtraLayersTest()
@@ -80,6 +81,84 @@ namespace DosTerrainLib.NUnit
             Assert.AreEqual(1, layer.Index);
             Assert.AreEqual(triangleSizeInBytes, layer.Triangles.Length * 12);
             Assert.AreEqual(intensitiesInBytes, layer.Intensities.Length * 4);
+        }
+
+        [Test]
+        public void write100By100NoExtraLayersTest()
+        {
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
+            String pathToOutputTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000_out.data";
+
+            DosTerrainParser parser = new DosTerrainParser();
+            DosTerrain terrain = parser.ReadDosTerrain(100, 100, pathToTestFile);
+
+            DosTerrainWriter writer = new DosTerrainWriter();
+            writer.WriteDosTerrain(terrain, pathToOutputTestFile);
+
+            try
+            {
+                DosTerrain terrain2 = parser.ReadDosTerrain(100, 100, pathToOutputTestFile);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+            finally
+            {
+                File.Delete(pathToOutputTestFile);
+            }
+        }
+
+        [Test]
+        public void write64By64NoExtraLayersTest()
+        {
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_001.data";
+            String pathToOutputTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_001_out.data";
+
+            DosTerrainParser parser = new DosTerrainParser();
+            DosTerrain terrain = parser.ReadDosTerrain(64, 64, pathToTestFile);
+
+            DosTerrainWriter writer = new DosTerrainWriter();
+            writer.WriteDosTerrain(terrain, pathToOutputTestFile);
+
+            try
+            {
+                DosTerrain terrain2 = parser.ReadDosTerrain(64, 64, pathToOutputTestFile);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+            finally
+            {
+                File.Delete(pathToOutputTestFile);
+            }
+        }
+
+        [Test]
+        public void write64By64ExtraLayersTest()
+        {
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_002.data";
+            String pathToOutputTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_002_out.data";
+
+            DosTerrainParser parser = new DosTerrainParser();
+            DosTerrain terrain = parser.ReadDosTerrain(64, 64, pathToTestFile);
+
+            DosTerrainWriter writer = new DosTerrainWriter();
+            writer.WriteDosTerrain(terrain, pathToOutputTestFile);
+
+            try
+            {
+                DosTerrain terrain2 = parser.ReadDosTerrain(64, 64, pathToOutputTestFile);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+            finally
+            {
+                File.Delete(pathToOutputTestFile);
+            }
         }
     }
 }
