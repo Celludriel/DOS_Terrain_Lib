@@ -57,7 +57,7 @@ namespace DosTerrainLib
             }
             Console.WriteLine("Start reading layer at index: " + layer.index);
 
-            UInt32 maxTriangles = dosBinaryReader.ReadUInt32();
+            UInt32 maxTriangles = dosBinaryReader.ReadUInt32() / 12;
             Console.WriteLine("Reading " + maxTriangles + " triangles");
             layer.Triangles = new Triangle[maxTriangles];
             for (int i = 0; i < maxTriangles; i++)
@@ -66,7 +66,7 @@ namespace DosTerrainLib
                 layer.Triangles[i] = triangle;
             }
 
-            UInt32 maxIntensities = dosBinaryReader.ReadUInt32();
+            UInt32 maxIntensities = dosBinaryReader.ReadUInt32() / 4;
             Console.WriteLine("Reading " + maxIntensities + " intensities");
             layer.Intensities = new Intensity[maxIntensities];
             for (int i = 0; i < maxIntensities; i++)

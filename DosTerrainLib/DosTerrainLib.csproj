@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TestData\Terrain_000.data" />
+    <None Include="TestData\Terrain_001.data" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

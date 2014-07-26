@@ -10,10 +10,10 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_001.data";
 
             DosTerrainParser parser = new DosTerrainParser();
-            parser.readDosTerrain(100,100,pathToTestFile);
+            parser.readDosTerrain(64,64,pathToTestFile);
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
