@@ -160,5 +160,39 @@ namespace DosTerrainLib.NUnit
                 File.Delete(pathToOutputTestFile);
             }
         }
+
+        [Test]
+        public void parseFileDoesNotExistExceptionTest()
+        {
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\fake.data";
+            DosTerrainParser parser = new DosTerrainParser();
+
+            try
+            {
+                DosTerrain terrain = parser.ReadDosTerrain(100, 100, pathToTestFile);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Error: The terrain file: C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\fake.data doesn't exist.", e.Message);
+            }
+        }
+
+        [Test]
+        public void parseInvalidSizesGivenTest()
+        {
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
+            DosTerrainParser parser = new DosTerrainParser();
+
+            try
+            {
+                DosTerrain terrain = parser.ReadDosTerrain(50, 100, pathToTestFile);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Invalid width and height provided map size should be 10404 but is calculated to 5304", e.Message);
+            }
+        }
     }
 }
