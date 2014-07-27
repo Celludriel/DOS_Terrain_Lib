@@ -23,8 +23,8 @@ namespace DosTerrainLib.Helper
 
         private static uint GetIndexAt(DosTerrain terrain, UInt32 x, UInt32 y)
         {
-            UInt32 xBoundary = (terrain.Width - 1);
-            UInt32 yBoundary = (terrain.Height - 1);
+            UInt32 xBoundary = (terrain.Width / 2);
+            UInt32 yBoundary = (terrain.Height / 2);
             if (x > xBoundary)
             {
                 throw new Exception("X cannot exceed " + xBoundary);

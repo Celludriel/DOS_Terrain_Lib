@@ -34,15 +34,21 @@ namespace DosTerrainLib
                     char[] padding = dosBinaryReader.ReadChars(16);
 
                     terrain.Layers = new List<LayerType>();
-                    LayerType backGroundLayer = ReadLayerType(dosBinaryReader, true);
-                    terrain.Layers.Add(backGroundLayer);
+                    uint n = (UInt32)Math.Ceiling((((width * height) / (32 * 32)) / 8.0));
+                    for (int i = 0; i < n; i++)
+                    {
+                        terrain.Layers.Add(ReadLayerType(dosBinaryReader, true));
+                    }
 
                     UInt32 textureLayers = dosBinaryReader.ReadUInt32();
                     if (textureLayers != 0)
                     {
                         for (int i = 0; i < textureLayers; i++)
                         {
-                            terrain.Layers.Add(ReadLayerType(dosBinaryReader, false));
+                            for (int j = 0; j < n; j++)
+                            {
+                                terrain.Layers.Add(ReadLayerType(dosBinaryReader, false));
+                            }
                         }
                     }
 
@@ -104,6 +110,7 @@ namespace DosTerrainLib
         private static void ReadHeightMapData(UInt32 x, UInt32 y, DosTerrain terrain, BinaryReader dosBinaryReader)
         {
             Console.WriteLine("Start reading heightmap data");
+            UInt32 totalReads = 0;
             UInt32 heightmapSize = dosBinaryReader.ReadUInt32();
             UInt32 maxTiles = (x + 1) * (y + 1);
             Console.WriteLine("Reading height data for " + maxTiles + " Tiles");
@@ -115,13 +122,14 @@ namespace DosTerrainLib
                 for (int i = 0; i < maxTiles; i++)
                 {
                     terrain.HeightMapData[i] = dosBinaryReader.ReadSingle();
+                    totalReads++;
                 }
             }
             else
             {
                 throw new Exception("Invalid width and height provided map size should be " + heightmapSize + " but is calculated to " + calculatedSizeFromParameters);
             }
-            Console.WriteLine("End reading heightmap data");
+            Console.WriteLine("End reading heightmap data " + totalReads + " values read");
         }
 
         private static void ReadToEndOfFile(BinaryReader dosBinaryReader)
