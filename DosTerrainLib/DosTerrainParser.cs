@@ -34,21 +34,14 @@ namespace DosTerrainLib
                     char[] padding = dosBinaryReader.ReadChars(16);
 
                     terrain.Layers = new List<LayerType>();
-                    uint n = (UInt32)Math.Ceiling((((width * height) / (32 * 32)) / 8.0));
-                    for (int i = 0; i < n; i++)
-                    {
-                        terrain.Layers.Add(ReadLayerType(dosBinaryReader, true));
-                    }
+                    terrain.Layers.Add(ReadLayerType(dosBinaryReader, true));
 
                     UInt32 textureLayers = dosBinaryReader.ReadUInt32();
                     if (textureLayers != 0)
                     {
                         for (int i = 0; i < textureLayers; i++)
                         {
-                            for (int j = 0; j < n; j++)
-                            {
-                                terrain.Layers.Add(ReadLayerType(dosBinaryReader, false));
-                            }
+                            terrain.Layers.Add(ReadLayerType(dosBinaryReader, false));
                         }
                     }
 
@@ -67,15 +60,22 @@ namespace DosTerrainLib
             }
             Console.WriteLine("Start reading layer at index: " + layer.Index);
 
-            UInt32 maxTriangles = dosBinaryReader.ReadUInt32() / 12;
-            Console.WriteLine("Reading " + maxTriangles + " triangles");
-            layer.Triangles = new Triangle[maxTriangles];
-            for (int i = 0; i < maxTriangles; i++)
+            UInt32 layerHeader = 0;
+            List<Triangle> triangles = new List<Triangle>();
+            
+            layerHeader = dosBinaryReader.ReadUInt32();
+            do
             {
-                Triangle triangle = ReadTriangle(dosBinaryReader);
-                layer.Triangles[i] = triangle;
-            }
-
+                UInt32 maxTriangles = layerHeader / 12;
+                Console.WriteLine("Reading " + maxTriangles + " triangles");                
+                for (int i = 0; i < maxTriangles; i++)
+                {
+                    triangles.Add(ReadTriangle(dosBinaryReader));
+                }
+                layerHeader = dosBinaryReader.ReadUInt32();
+            } while (layerHeader == 24576);
+            layer.Triangles = triangles.ToArray();
+           
             UInt32 maxIntensities = dosBinaryReader.ReadUInt32() / 4;
             Console.WriteLine("Reading " + maxIntensities + " intensities");
             layer.Intensities = new Intensity[maxIntensities];
@@ -84,6 +84,7 @@ namespace DosTerrainLib
                 Intensity intensity = ReadIntensity(dosBinaryReader);
                 layer.Intensities[i] = intensity;
             }
+
             Console.WriteLine("End reading layer at index: " + layer.Index);
             return layer;
         }
