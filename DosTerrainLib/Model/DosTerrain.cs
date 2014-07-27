@@ -7,8 +7,10 @@ using DosTerrainLib.Model;
 
 namespace DosTerrainLib.Model
 {
-    class DosTerrain
+    public class DosTerrain
     {
+        public UInt32 Width;
+        public UInt32 Height;
         public UInt32 HeightMapSize;
         public float[] HeightMapData;
         public List<LayerType> Layers;

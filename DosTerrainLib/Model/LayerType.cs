@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib.Model
 {
-    class LayerType
+    public class LayerType
     {
         public UInt32 Index = 999;
         public Triangle[] Triangles;

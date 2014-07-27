@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib.Model
 {
-    class Triangle
+    public class Triangle
     {
         public UInt32 Vertex1;
         public UInt32 Vertex2;

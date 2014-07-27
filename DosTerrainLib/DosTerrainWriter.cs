@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib
 {
-    class DosTerrainWriter
+    public class DosTerrainWriter
     {
         public void WriteDosTerrain(DosTerrain terrain, string outputFileName)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib.Model
 {
-    class Intensity
+    public class Intensity
     {
         public byte value1;
         public byte value2;

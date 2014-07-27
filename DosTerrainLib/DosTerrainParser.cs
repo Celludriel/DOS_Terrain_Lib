@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DosTerrainLib
 {
-    class DosTerrainParser
+    public class DosTerrainParser
     {
         public DosTerrain ReadDosTerrain(UInt32 width, UInt32 height, string filename)
         {
@@ -21,6 +21,9 @@ namespace DosTerrainLib
             }
 
             DosTerrain terrain = new DosTerrain();
+            terrain.Width = x;
+            terrain.Height = y;
+
             byte[] dosBinaryFileContent = File.ReadAllBytes(filename);
             using (MemoryStream dosBinaryMemoryStream = new MemoryStream(dosBinaryFileContent))
             {

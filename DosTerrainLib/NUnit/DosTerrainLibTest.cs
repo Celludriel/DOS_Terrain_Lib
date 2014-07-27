@@ -26,7 +26,7 @@ namespace DosTerrainLib.NUnit
             Assert.AreEqual(1, terrain.Layers.Count);
             LayerType layer = terrain.Layers.ElementAt(0);
             Assert.AreEqual(999, layer.Index);
-            UInt32 triangleSizeInBytes = 50 * 50 * 24;
+            UInt32 triangleSizeInBytes = 64 * 64 * 24;
             Assert.AreEqual(triangleSizeInBytes, layer.Triangles.Length * 12);
             Assert.AreEqual(0, layer.Intensities.Length * 4);
         }
