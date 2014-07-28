@@ -11,10 +11,10 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\64.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000TEX.data";
 
             DosTerrainParser parser = new DosTerrainParser();
-            DosTerrain terrain = parser.ReadDosTerrain(64, 64, pathToTestFile);
+            DosTerrain terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
