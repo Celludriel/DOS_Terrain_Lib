@@ -11,7 +11,7 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000TEX.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000.data";
 
             DosTerrainParser parser = new DosTerrainParser();
             DosTerrain terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
