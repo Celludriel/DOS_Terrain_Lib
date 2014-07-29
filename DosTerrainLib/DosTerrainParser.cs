@@ -88,11 +88,11 @@ namespace DosTerrainLib
         private static List<BackgroundData> ReadBackgroundLayer(BinaryReader dosBinaryReader, uint x, uint y)
         {
             List<BackgroundData> data = new List<BackgroundData>();
-            List<Triangle> triangles = new List<Triangle>();
             uint amountOfBigTiles = CalculateBigTiles(x, y);
 
             for(uint j=0;j < amountOfBigTiles;j++){
                 BackgroundData backgroundData = new BackgroundData();
+                List<Triangle> triangles = new List<Triangle>();
                 backgroundData.BackgroundLayerByteSize = dosBinaryReader.ReadUInt32();
                 UInt32 maxTriangles = backgroundData.BackgroundLayerByteSize / 12;
                 Console.WriteLine("Reading " + maxTriangles + " triangles");                
@@ -100,7 +100,7 @@ namespace DosTerrainLib
                 {
                     triangles.Add(ReadTriangle(dosBinaryReader));
                 }
-                backgroundData.Triangles = triangles.ToArray();
+                backgroundData.Triangles = triangles.ToArray();                
                 data.Add(backgroundData);
             }
             return data;
