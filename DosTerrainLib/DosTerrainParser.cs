@@ -33,9 +33,8 @@ namespace DosTerrainLib
 
                     char[] padding = dosBinaryReader.ReadChars(16);
 
-                    terrain.Layers = new List<LayerType>();                    
-                    terrain.Layers.Add(ReadLayerType(dosBinaryReader,x,y));
-                    terrain.texturePages = ReadTexturePages(dosBinaryReader, x, y);
+                    terrain.BackGroundData = ReadBackgroundLayer(dosBinaryReader, x, y);              
+                    terrain.TexturePages = ReadTexturePages(dosBinaryReader, x, y);
 
                     ReadToEndOfFile(dosBinaryReader);
                 }
@@ -59,8 +58,8 @@ namespace DosTerrainLib
                     TextureLayerData data = new TextureLayerData();
 
                     data.TexturePosition = dosBinaryReader.ReadUInt32();
-                    UInt32 triangleBytes = dosBinaryReader.ReadUInt32();
-                    UInt32 maxTriangles = triangleBytes / 12;
+                    data.TriangleBytes = dosBinaryReader.ReadUInt32();
+                    UInt32 maxTriangles = data.TriangleBytes / 12;
                     List<Triangle> triangles = new List<Triangle>();
                     Console.WriteLine("Reading " + maxTriangles + " triangles");
                     for (int i = 0; i < maxTriangles; i++)
@@ -69,9 +68,9 @@ namespace DosTerrainLib
                     }
                     data.Triangles = triangles;
 
-                    UInt32 intensityBytes = dosBinaryReader.ReadUInt32();
+                    data.IntensityBytes = dosBinaryReader.ReadUInt32();
                     List<Intensity> intensities = new List<Intensity>();
-                    UInt32 maxIntensities = intensityBytes / 4;
+                    UInt32 maxIntensities = data.IntensityBytes / 4;
                     Console.WriteLine("Reading " + maxIntensities + " intensities");
                     for (int i = 0; i < maxIntensities; i++)
                     {
@@ -86,28 +85,25 @@ namespace DosTerrainLib
             return textureLayerPages;
         }
 
-        private static LayerType ReadLayerType(BinaryReader dosBinaryReader, uint x, uint y)
+        private static List<BackgroundData> ReadBackgroundLayer(BinaryReader dosBinaryReader, uint x, uint y)
         {
-            LayerType layer = new LayerType();
-            Console.WriteLine("Start reading layer at index: " + layer.Index);
-
+            List<BackgroundData> data = new List<BackgroundData>();
             List<Triangle> triangles = new List<Triangle>();
             uint amountOfBigTiles = CalculateBigTiles(x, y);
 
             for(uint j=0;j < amountOfBigTiles;j++){
-                
-                UInt32 lastReadValue = dosBinaryReader.ReadUInt32();
-                UInt32 maxTriangles = lastReadValue / 12;
+                BackgroundData backgroundData = new BackgroundData();
+                backgroundData.BackgroundLayerByteSize = dosBinaryReader.ReadUInt32();
+                UInt32 maxTriangles = backgroundData.BackgroundLayerByteSize / 12;
                 Console.WriteLine("Reading " + maxTriangles + " triangles");                
                 for (int i = 0; i < maxTriangles; i++)
                 {
                     triangles.Add(ReadTriangle(dosBinaryReader));
                 }
+                backgroundData.Triangles = triangles.ToArray();
+                data.Add(backgroundData);
             }
-            layer.Triangles = triangles.ToArray();
-
-            Console.WriteLine("End reading layer at index: " + layer.Index);
-            return layer;
+            return data;
         }
 
         private static uint CalculateBigTiles(uint x, uint y)
@@ -143,13 +139,12 @@ namespace DosTerrainLib
         {
             Console.WriteLine("Start reading heightmap data");
             UInt32 totalReads = 0;
-            UInt32 heightmapSize = dosBinaryReader.ReadUInt32();
+            terrain.HeightMapSize = dosBinaryReader.ReadUInt32();
             UInt32 maxTiles = (x + 1) * (y + 1);
             Console.WriteLine("Reading height data for " + maxTiles + " Tiles");
             UInt32 calculatedSizeFromParameters = (maxTiles * 4);
-            if (heightmapSize == calculatedSizeFromParameters)
-            {
-                terrain.HeightMapSize = heightmapSize;
+            if (terrain.HeightMapSize == calculatedSizeFromParameters)
+            {                
                 terrain.HeightMapData = new float[maxTiles];
                 for (int i = 0; i < maxTiles; i++)
                 {
@@ -159,7 +154,7 @@ namespace DosTerrainLib
             }
             else
             {
-                throw new Exception("Invalid width and height provided map size should be " + heightmapSize + " but is calculated to " + calculatedSizeFromParameters);
+                throw new Exception("Invalid width and height provided map size should be " + terrain.HeightMapSize + " but is calculated to " + calculatedSizeFromParameters);
             }
             Console.WriteLine("End reading heightmap data " + totalReads + " values read");
         }

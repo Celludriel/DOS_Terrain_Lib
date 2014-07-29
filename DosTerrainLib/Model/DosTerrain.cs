@@ -13,7 +13,7 @@ namespace DosTerrainLib.Model
         public UInt32 Height;
         public UInt32 HeightMapSize;
         public float[] HeightMapData;
-        public List<LayerType> Layers;
-        public List<TextureLayerPage> texturePages;
+        public List<BackgroundData> BackGroundData;
+        public List<TextureLayerPage> TexturePages;
     }
 }

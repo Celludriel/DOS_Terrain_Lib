@@ -52,7 +52,7 @@
     <Compile Include="Helper\HeigthMapEditor.cs" />
     <Compile Include="Model\DosTerrain.cs" />
     <Compile Include="Model\Intensity.cs" />
-    <Compile Include="Model\LayerType.cs" />
+    <Compile Include="Model\BackgroundData.cs" />
     <Compile Include="Model\TextureLayerData.cs" />
     <Compile Include="Model\TextureLayerPage.cs" />
     <Compile Include="Model\Triangle.cs" />
