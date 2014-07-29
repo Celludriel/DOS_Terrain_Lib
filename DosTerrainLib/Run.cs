@@ -11,10 +11,10 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\63.data";
 
             DosTerrainParser parser = new DosTerrainParser();
-            DosTerrain terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
+            DosTerrain terrain = parser.ReadDosTerrain(63, 63, pathToTestFile);
 
             /*Dump dumper = new Dump();
             dumper.ReadToEndOfFile(pathToTestFile);*/
