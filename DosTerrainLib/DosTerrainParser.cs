@@ -46,7 +46,7 @@ namespace DosTerrainLib
         private static List<TextureLayerPage> ReadTexturePages(BinaryReader dosBinaryReader, UInt32 x, UInt32 y)
         {
             List<TextureLayerPage> textureLayerPages = new List<TextureLayerPage>();
-            uint amountOfBigTiles = x / 32 * y / 32;
+            uint amountOfBigTiles = (x / 32) * (y / 32);
 
             for (int j = 0; j < amountOfBigTiles; j++)
             {
@@ -92,8 +92,9 @@ namespace DosTerrainLib
             Console.WriteLine("Start reading layer at index: " + layer.Index);
 
             List<Triangle> triangles = new List<Triangle>();
-            uint amountOfBigTiles = x / 32 * y / 32;
+            uint amountOfBigTiles = (x / 32) * (y / 32);
             for(uint j=0;j < amountOfBigTiles;j++){
+                
                 UInt32 lastReadValue = dosBinaryReader.ReadUInt32();
                 UInt32 maxTriangles = lastReadValue / 12;
                 Console.WriteLine("Reading " + maxTriangles + " triangles");                

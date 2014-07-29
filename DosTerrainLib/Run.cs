@@ -16,6 +16,9 @@ namespace DosTerrainLib
             DosTerrainParser parser = new DosTerrainParser();
             DosTerrain terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
 
+            /*Dump dumper = new Dump();
+            dumper.ReadToEndOfFile(pathToTestFile);*/
+
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DosTerrainParser.cs" />
     <Compile Include="DosTerrainWriter.cs" />
+    <Compile Include="Dump.cs" />
     <Compile Include="Helper\HeigthMapEditor.cs" />
     <Compile Include="Model\DosTerrain.cs" />
     <Compile Include="Model\Intensity.cs" />
