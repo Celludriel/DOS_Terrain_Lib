@@ -108,7 +108,7 @@ namespace DosTerrainLib
 
         private static uint CalculateBigTiles(uint x, uint y)
         {
-            uint amountOfBigTiles = (x / 32) * (y / 32);
+            uint amountOfBigTiles = (UInt32) Math.Round((x / 32.0) * (y / 32.0));
             if (amountOfBigTiles == 0)
             {
                 amountOfBigTiles = 1;

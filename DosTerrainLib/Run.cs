@@ -11,18 +11,10 @@ namespace DosTerrainLib
     {
         static void Main()
         {
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\320TWOTEX.data";
-            String outputFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\320TWOTEXOUT.data";
+            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\21.data";
 
             DosTerrainParser parser = new DosTerrainParser();
-            DosTerrain terrain = parser.ReadDosTerrain(320, 320, pathToTestFile);
-
-            DosTerrainWriter writer = new DosTerrainWriter();
-            writer.WriteDosTerrain(terrain, outputFile);
-
-            Dump dumper = new Dump();
-            dumper.ReadToEndOfFile(pathToTestFile, "320TWOTEX.dump");
-            dumper.ReadToEndOfFile(outputFile, "320TWOTEXOUT.dump");
+            DosTerrain terrain = parser.ReadDosTerrain(21, 21, pathToTestFile);
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
