@@ -12,12 +12,31 @@ namespace DosTerrainLib
         static void Main()
         {
             DosTerrainParser parser = new DosTerrainParser();
+            DosTerrainWriter writer = new DosTerrainWriter();
+            DosTerrain terrain;
+            String pathToTestFile;
 
-            String pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\128.data";
-            DosTerrain terrain = parser.ReadDosTerrain(128, 128, pathToTestFile);
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\21.data";
+            String pathOutFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\21OUT.data";
+            terrain = parser.ReadDosTerrain(21, 21, pathToTestFile);
+            writer.WriteDosTerrain(terrain, pathOutFile);
+            terrain = parser.ReadDosTerrain(21, 21, pathOutFile);
 
+
+            /*pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\63.data";
+            terrain = parser.ReadDosTerrain(63, 63, pathToTestFile);
+
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\64.data";
+            terrain = parser.ReadDosTerrain(64, 64, pathToTestFile);
+
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\128.data";
+            terrain = parser.ReadDosTerrain(128, 128, pathToTestFile);
+            
             pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\192.data";
             terrain = parser.ReadDosTerrain(192, 192, pathToTestFile);
+
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\254.data";
+            terrain = parser.ReadDosTerrain(254, 254, pathToTestFile);
 
             pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\256.data";
             terrain = parser.ReadDosTerrain(256, 256, pathToTestFile);
@@ -26,7 +45,8 @@ namespace DosTerrainLib
             terrain = parser.ReadDosTerrain(320, 320, pathToTestFile);
 
             pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000.data";
-            terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
+            terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);*/
+
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();

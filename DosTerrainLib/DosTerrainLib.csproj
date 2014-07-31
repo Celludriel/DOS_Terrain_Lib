@@ -61,8 +61,19 @@
     <Compile Include="Run.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\Terrain_000.data" />
-    <None Include="TestData\Terrain_001.data" />
+    <None Include="TestData\1000.data" />
+    <None Include="TestData\100200.data" />
+    <None Include="TestData\127.data" />
+    <None Include="TestData\128.data" />
+    <None Include="TestData\192.data" />
+    <None Include="TestData\21.data" />
+    <None Include="TestData\254.data" />
+    <None Include="TestData\256.data" />
+    <None Include="TestData\320.data" />
+    <None Include="TestData\320ONETEX.data" />
+    <None Include="TestData\320TWOTEX.data" />
+    <None Include="TestData\63.data" />
+    <None Include="TestData\64.data" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\nunit.framework.dll" />

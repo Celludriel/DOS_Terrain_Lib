@@ -108,8 +108,8 @@ namespace DosTerrainLib
 
         private static uint CalculateBigTiles(uint x, uint y)
         {
-            uint xFactor = x < 64 ? (UInt32) Math.Round(x / 32.0) : x / 32;
-            uint yFactor = y < 64 ? (UInt32) Math.Round(y / 32.0) : y / 32;
+            uint xFactor = (UInt32)x / 32;
+            uint yFactor = (UInt32)y / 32;
             uint amountOfBigTiles = xFactor * yFactor;
             if (amountOfBigTiles == 0)
             {
@@ -142,6 +142,7 @@ namespace DosTerrainLib
             Console.WriteLine("Start reading heightmap data");
             UInt32 totalReads = 0;
             terrain.HeightMapSize = dosBinaryReader.ReadUInt32();
+            Console.WriteLine("Heightmap size " + terrain.HeightMapSize);
             UInt32 maxTiles = (x + 1) * (y + 1);
             Console.WriteLine("Reading height data for " + maxTiles + " Tiles");
             UInt32 calculatedSizeFromParameters = (maxTiles * 4);
