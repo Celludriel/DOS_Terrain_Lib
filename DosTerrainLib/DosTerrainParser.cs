@@ -108,8 +108,18 @@ namespace DosTerrainLib
 
         private static uint CalculateBigTiles(uint x, uint y)
         {
+            if (x % 2 != 0)
+            {
+                ++x;
+            }
             uint xFactor = (UInt32)x / 32;
+
+            if (y % 2 != 0)
+            {
+                ++y;
+            }
             uint yFactor = (UInt32)y / 32;
+
             uint amountOfBigTiles = xFactor * yFactor;
             if (amountOfBigTiles == 0)
             {
