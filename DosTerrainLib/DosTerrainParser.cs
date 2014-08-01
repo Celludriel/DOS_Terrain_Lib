@@ -21,8 +21,8 @@ namespace DosTerrainLib
             }
 
             DosTerrain terrain = new DosTerrain();
-            terrain.Width = x;
-            terrain.Height = y;
+            terrain.Width = width;
+            terrain.Height = height;
 
             byte[] dosBinaryFileContent = File.ReadAllBytes(filename);
             using (MemoryStream dosBinaryMemoryStream = new MemoryStream(dosBinaryFileContent))
