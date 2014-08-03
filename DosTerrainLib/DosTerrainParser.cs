@@ -34,7 +34,7 @@ namespace DosTerrainLib
                     char[] padding = dosBinaryReader.ReadChars(16);
 
                     terrain.BackGroundData = ReadBackgroundLayer(dosBinaryReader, x, y);              
-                    terrain.TexturePages = ReadTexturePages(dosBinaryReader, x, y);
+                    terrain.TextureLayerPages = ReadTexturePages(dosBinaryReader, x, y);
 
                     ReadToEndOfFile(dosBinaryReader);
                 }
@@ -45,7 +45,7 @@ namespace DosTerrainLib
         private static List<TextureLayerPage> ReadTexturePages(BinaryReader dosBinaryReader, UInt32 x, UInt32 y)
         {
             List<TextureLayerPage> textureLayerPages = new List<TextureLayerPage>();
-            uint amountOfBigTiles = CalculateBigTiles(x, y);
+            uint amountOfBigTiles = CalculatePages(x, y);
 
             for (int j = 0; j < amountOfBigTiles; j++)
             {
@@ -88,13 +88,13 @@ namespace DosTerrainLib
         private static List<BackgroundData> ReadBackgroundLayer(BinaryReader dosBinaryReader, uint x, uint y)
         {
             List<BackgroundData> data = new List<BackgroundData>();
-            uint amountOfBigTiles = CalculateBigTiles(x, y);
+            uint amountOfBigTiles = CalculatePages(x, y);
 
             for(uint j=0;j < amountOfBigTiles;j++){
                 BackgroundData backgroundData = new BackgroundData();
                 List<Triangle> triangles = new List<Triangle>();
-                backgroundData.BackgroundLayerByteSize = dosBinaryReader.ReadUInt32();
-                UInt32 maxTriangles = backgroundData.BackgroundLayerByteSize / 12;
+                backgroundData.TriangleBytes = dosBinaryReader.ReadUInt32();
+                UInt32 maxTriangles = backgroundData.TriangleBytes / 12;
                 Console.WriteLine("Reading " + maxTriangles + " triangles");                
                 for (int i = 0; i < maxTriangles; i++)
                 {
@@ -106,26 +106,41 @@ namespace DosTerrainLib
             return data;
         }
 
-        private static uint CalculateBigTiles(uint x, uint y)
+        private static uint CalculatePages(uint x, uint y)
+        {            
+            if (x <= 32 && y <= 32)
+            {
+                return 1;
+            }
+            else
+            {
+                uint xFactor = CalculatePageFactor(x);
+                uint yFactor = CalculatePageFactor(y);
+
+                uint amountOfPages = xFactor * yFactor;
+                if (amountOfPages == 0)
+                {
+                    amountOfPages = 1;
+                }
+                return amountOfPages;
+            }
+        }
+
+        private static uint CalculatePageFactor(uint coord)
         {
-            if (x % 2 != 0)
+            // Anything smaller the 32 is always 1 page so no calculation needed
+            if (coord > 32)
             {
-                ++x;
+                if (coord % 2 != 0)
+                {
+                    ++coord;
+                }
+                return (UInt32)coord / 32;
             }
-            uint xFactor = (UInt32)x / 32;
-
-            if (y % 2 != 0)
+            else
             {
-                ++y;
+                return 1;
             }
-            uint yFactor = (UInt32)y / 32;
-
-            uint amountOfBigTiles = xFactor * yFactor;
-            if (amountOfBigTiles == 0)
-            {
-                amountOfBigTiles = 1;
-            }
-            return amountOfBigTiles;
         }
 
         private static Intensity ReadIntensity(BinaryReader dosBinaryReader)

@@ -27,7 +27,7 @@ namespace DosTerrainLib
                 // writing of background layer data
                 foreach (BackgroundData data in terrain.BackGroundData)
                 {
-                    bw.Write(data.BackgroundLayerByteSize);
+                    bw.Write(data.TriangleBytes);
                     foreach (Triangle triangle in data.Triangles)
                     {
                         bw.Write(triangle.Vertex1);
@@ -36,7 +36,7 @@ namespace DosTerrainLib
                     }              
                 }
                 
-                foreach (TextureLayerPage textureLayerPage in terrain.TexturePages)
+                foreach (TextureLayerPage textureLayerPage in terrain.TextureLayerPages)
                 {
                     bw.Write(textureLayerPage.PageNo);
                     bw.Write(textureLayerPage.AmountOfLayers);

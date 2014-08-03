@@ -8,7 +8,7 @@ namespace DosTerrainLib.Model
 {
     public class BackgroundData
     {
-        public UInt32 BackgroundLayerByteSize;
+        public UInt32 TriangleBytes;
         public Triangle[] Triangles;
     }
 }

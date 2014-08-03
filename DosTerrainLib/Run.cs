@@ -41,21 +41,35 @@ namespace DosTerrainLib
             pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\256.data";
             terrain = parser.ReadDosTerrain(256, 256, pathToTestFile);
             
-            */          
+            */
 
-            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\320TWOTEX.data";
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\320ONETEX.data";
             String outputFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
+            String txtOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.txt";
             String xmlOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.xml";
+            new Dump().ReadToEndOfFile(pathToTestFile, txtOutput);
             terrain = parser.ReadDosTerrain(320, 320, pathToTestFile);
             XMLWrite.WriteXML(terrain, xmlOutput);
             terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 1, 0);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 2, 0);
-            for(uint j = 0; j < 320;j = j+2){
+            //terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 2, 0);
+            for (uint j = 0; j < 320; j = j + 2)
+            {
                 for (uint i = 0; i < 320; i++)
                 {
-                    terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, i, j, 1, 255);
+                    terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, i, j, 0, 255);
                 }
             }
+            /*
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 0, 0, 0, 255);
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 0, 125, 0, 255);
+            
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 125, 0, 0, 255);
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 125, 125, 0, 255);
+            
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 30, 0, 0, 255);
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 30, 30, 0, 255);
+            terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, 30, 125, 0, 255); */
+
             writer.WriteDosTerrain(terrain, outputFile);
 
             /*
