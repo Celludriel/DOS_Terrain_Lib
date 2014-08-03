@@ -13,9 +13,9 @@ namespace DosTerrainLib.Helper
 
         public static DosTerrain SetIntensityOnLayerForCoordinate(DosTerrain terrain, UInt32 x, UInt32 y, UInt32 layer, byte value)
         {
-             using (FileStream fs = new FileStream("c:\\temp\\log.txt",FileMode.Append, FileAccess.Write)){
+/*             using (FileStream fs = new FileStream("c:\\temp\\log.txt",FileMode.Append, FileAccess.Write)){
                  using (StreamWriter sw = new StreamWriter(fs))
-                 {
+                 { */
                     UInt32 pageIndex = CalculatePageIndex(terrain, x, y);
                     sw.WriteLine("x: " + x + " y: " + y + " index: " + pageIndex);
                     TextureLayerPage page = terrain.TextureLayerPages.ElementAt((int)pageIndex);
@@ -30,8 +30,8 @@ namespace DosTerrainLib.Helper
                         }
                     }
                     return terrain;
-                 }
-             }
+/*                 }
+             } */
         }
 
         private static uint CalculateIntensityIndex(DosTerrain terrain, UInt32 x, UInt32 y)
