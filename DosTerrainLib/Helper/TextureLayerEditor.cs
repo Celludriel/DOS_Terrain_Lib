@@ -17,14 +17,14 @@ namespace DosTerrainLib.Helper
                  using (StreamWriter sw = new StreamWriter(fs))
                  { */
                     UInt32 pageIndex = CalculatePageIndex(terrain, x, y);
-                    sw.WriteLine("x: " + x + " y: " + y + " index: " + pageIndex);
+                    //sw.WriteLine("x: " + x + " y: " + y + " index: " + pageIndex);
                     TextureLayerPage page = terrain.TextureLayerPages.ElementAt((int)pageIndex);
                     foreach (TextureLayerData data in page.Data)
                     {
                         if (data.TexturePosition == layer)
                         {
                             UInt32 intensityIndex = CalculateIntensityIndex(terrain, x, y);
-                            sw.WriteLine("Intensity " + intensityIndex);
+                            //sw.WriteLine("Intensity " + intensityIndex);
                             Intensity intensity = data.Intensities.ElementAt((int)intensityIndex);
                             SetIntensityTo(value, intensity);
                         }
