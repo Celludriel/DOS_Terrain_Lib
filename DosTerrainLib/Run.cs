@@ -43,18 +43,18 @@ namespace DosTerrainLib
             
             */
 
-            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\128x192ONETEX.data";
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\100by120ONETEX.data";
             String outputFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
             String txtOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.txt";
             String xmlOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.xml";
             new Dump().ReadToEndOfFile(pathToTestFile, txtOutput);
-            terrain = parser.ReadDosTerrain(128, 192, pathToTestFile);
+            terrain = parser.ReadDosTerrain(100, 120, pathToTestFile);
             XMLWrite.WriteXML(terrain, xmlOutput);
             terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 1, 0);
             //terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 2, 0);
-            for (uint j = 0; j < 192; j = j + 2)
+            for (uint j = 0; j < 120; j = j + 2)
             {
-                for (uint i = 0; i < 128; i++)
+                for (uint i = 0; i < 100; i++)
                 {
                     terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, i, j, 0, 255);
                 }

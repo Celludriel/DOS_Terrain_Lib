@@ -36,27 +36,24 @@ namespace DosTerrainLib.Helper
 
         private static uint CalculateIntensityIndex(DosTerrain terrain, UInt32 x, UInt32 y)
         {
-            if (terrain.Width < 127 && terrain.Height < 127)
+            if (terrain.Width < 64 && terrain.Height < 64)
             {
-                x = (UInt32)((x / Convert.ToSingle(terrain.Width)) * 32);
-                y = (UInt32)((y / Convert.ToSingle(terrain.Height)) * 32);
-                return (UInt32)(y * 32 + x);
+                return (x % (terrain.Width / 2)) + ((y % (terrain.Height / 2)) * (terrain.Width / 2));
             }
-            else if (terrain.Width < 127 && terrain.Height >= 127)
+            else if (terrain.Width < 64 && terrain.Height >= 127)
             {
                 // don't know yet
-                return 0;
+                return (x % (terrain.Width / 2)) + ((y % 32) * (terrain.Width / 2));
             }
-            else if (terrain.Width >= 127 && terrain.Height < 127)
+            else if (terrain.Width >= 127 && terrain.Height < 64)
             {
                 // don't know yet
-                return 0;
+                return (x % 32) + ((y % (terrain.Height / 2)) * 32);
             }
             else
             {
                 return (x % 32) + ((y % 32) * 32);
             }
-
         }
 
         private static uint CalculatePageIndex(DosTerrain terrain, UInt32 x, UInt32 y)

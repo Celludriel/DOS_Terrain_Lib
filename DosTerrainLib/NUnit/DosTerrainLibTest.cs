@@ -66,6 +66,30 @@ namespace DosTerrainLib.NUnit
         }
 
         [Test]
+        public void parseWriteDimension120by63Test()
+        {
+            testDimension("120by63ONETEX", 120, 63);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine120by63Test()
+        {
+            testTextureEveryOneLine("120by63ONETEX", 120, 63);
+        }
+
+        [Test]
+        public void parseWriteDimension63by120Test()
+        {
+            testDimension("63by120ONETEX", 63, 120);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine63by120Test()
+        {
+            testTextureEveryOneLine("63by120ONETEX", 63, 120);
+        }
+
+        [Test]
         public void parseWriteDimension100by120Test()
         {
             testDimension("100by120ONETEX", 100, 120);
