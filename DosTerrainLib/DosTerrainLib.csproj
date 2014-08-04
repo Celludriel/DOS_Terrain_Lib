@@ -62,7 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Util\XMLWrite.cs" />
-    <Compile Include="XMlWrite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestData\1000.data" />
