@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using DosTerrainLib.Model;
 using System.IO;
+using DosTerrainLib.Helper;
 
 namespace DosTerrainLib.NUnit
 {    
@@ -17,304 +18,200 @@ namespace DosTerrainLib.NUnit
         String rootPath = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\";
 
         [Test]
-        public void parseWriteDimension21By21Test()
+        public void parseWriteDimension10by10Test()
         {
-            string fileIn = "21.data";
-            string fileOut = "21out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(21, 21, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(21, 21, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 21x21 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("10by10ONETEX", 10, 10);
         }
 
         [Test]
-        public void parseWriteDimension63By63Test()
+        public void testTextureEveryOneLine10by10Test()
         {
-            string fileIn = "63.data";
-            string fileOut = "63out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(63, 63, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(63, 63, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 63x63 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testTextureEveryOneLine("10by10ONETEX", 10, 10);
         }
 
         [Test]
-        public void parseWriteDimension64By64Test()
+        public void parseWriteDimension40by63Test()
         {
-            string fileIn = "64.data";
-            string fileOut = "64out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(64, 64, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(64, 64, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 64x64 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("40by63ONETEX", 40, 63);
         }
 
         [Test]
-        public void parseWriteDimension127By127Test()
+        public void testTextureEveryOneLine40by63Test()
         {
-            string fileIn = "127.data";
-            string fileOut = "127out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(127, 127, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(127, 127, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 127x127 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testTextureEveryOneLine("40by63ONETEX", 40, 63);
         }
 
         [Test]
-        public void parseWriteDimension128By128Test()
+        public void parseWriteDimension63by40Test()
         {
-            string fileIn = "128.data";
-            string fileOut = "128out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(128, 128, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(128, 128, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 128x128 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("63by40ONETEX", 63, 40);
         }
 
         [Test]
-        public void parseWriteDimension192By192Test()
+        public void testTextureEveryOneLine63by40Test()
         {
-            string fileIn = "192.data";
-            string fileOut = "192out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(192, 192, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(192, 192, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 192x192 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testTextureEveryOneLine("63by40ONETEX", 63, 40);
         }
 
         [Test]
-        public void parseWriteDimension254By254Test()
+        public void parseWriteDimension63by63Test()
         {
-            string fileIn = "254.data";
-            string fileOut = "254out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(254, 254, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(254, 254, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 254x254 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("63by63ONETEX", 63, 63);
         }
 
         [Test]
-        public void parseWriteDimension256By256Test()
+        public void testTextureEveryOneLine63by63Test()
         {
-            string fileIn = "256.data";
-            string fileOut = "256out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(256, 256, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(256, 256, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 256x256 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testTextureEveryOneLine("63by63ONETEX", 63, 63);
         }
 
         [Test]
-        public void parseWriteDimension320By320Test()
+        public void parseWriteDimension100by120Test()
         {
-            string fileIn = "320.data";
-            string fileOut = "320out.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(320, 320, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(320, 320, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 320x320 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("100by120ONETEX", 100, 120);
         }
 
         [Test]
-        public void parseWriteDimension320By320OneTextureTest()
+        public void testTextureEveryOneLine100by120Test()
         {
-            string fileIn = "320ONETEX.data";
-            string fileOut = "320ONETEXout.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(320, 320, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(320, 320, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 320x320 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testTextureEveryOneLine("100by120ONETEX", 100, 120);
         }
 
         [Test]
-        public void parseWriteDimension320By320TwoTexturesTest()
+        public void parseWriteDimension120by100Test()
         {
-            string fileIn = "320TWOTEX.data";
-            string fileOut = "320TWOTEXout.data";
-            try
-            {
-                DosTerrain terrain = reader.ReadDosTerrain(320, 320, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(320, 320, rootPath + fileOut);
-            }
-            catch(Exception ex)
-            {
-                Assert.Fail("Terrain with dimension 320x320 couldn't be read or written: " + ex.Message);
-            }
-            finally
-            {
-                if (File.Exists(rootPath + fileOut))
-                {
-                    Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
-                }
-            }
+            testDimension("120by100ONETEX", 120, 100);
         }
 
         [Test]
-        public void parseWriteDimension1000By1000Test()
+        public void testTextureEveryOneLine120by100Test()
         {
-            string fileIn = "1000.data";
-            string fileOut = "1000out.data";
+            testTextureEveryOneLine("120by100ONETEX", 120, 100);
+        }
+
+        [Test]
+        public void parseWriteDimension120by120Test()
+        {
+            testDimension("120by120ONETEX", 120, 120);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine120by120Test()
+        {
+            testTextureEveryOneLine("120by120ONETEX", 120, 120);
+        }
+
+        [Test]
+        public void parseWriteDimension128by128Test()
+        {
+            testDimension("128by128ONETEX", 128, 128);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine128by128Test()
+        {
+            testTextureEveryOneLine("128by128ONETEX", 128, 128);
+        }
+
+        [Test]
+        public void parseWriteDimension128by320Test()
+        {
+            testDimension("128by320ONETEX", 128, 320);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine128by320Test()
+        {
+            testTextureEveryOneLine("128by320ONETEX", 128, 320);
+        }
+
+        [Test]
+        public void parseWriteDimension320by128Test()
+        {
+            testDimension("320by128ONETEX", 320, 128);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine320by128Test()
+        {
+            testTextureEveryOneLine("320by128ONETEX", 320, 128);
+        }
+
+        [Test]
+        public void parseWriteDimension1000by1000Test()
+        {
+            testDimension("1000by1000ONETEX", 1000, 1000);
+        }
+
+        [Test]
+        public void testTextureEveryOneLine1000by1000Test()
+        {
+            testTextureEveryOneLine("1000by1000ONETEX", 1000, 1000);
+        }
+
+        private void testDimension(string file, uint x, uint y)
+        {
+            string fileIn = rootPath + file + ".data";
+            string fileOut = rootPath + file + "_out.data";
             try
             {
-                DosTerrain terrain = reader.ReadDosTerrain(1000, 1000, rootPath + fileIn);
-                writer.WriteDosTerrain(terrain, rootPath + fileOut);
-                terrain = reader.ReadDosTerrain(1000, 1000, rootPath + fileOut);
+                DosTerrain terrain = reader.ReadDosTerrain(x, y, fileIn);
+                writer.WriteDosTerrain(terrain, fileOut);
+                terrain = reader.ReadDosTerrain(x, y, fileOut);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Assert.Fail("Terrain with dimension 1000x1000 couldn't be read or written: " + ex.Message);
+                Assert.Fail("Terrain with dimension x:" + x + ", y" + y +" couldn't be read or written: " + ex.Message);
             }
             finally
             {
                 if (File.Exists(rootPath + fileOut))
                 {
                     Console.WriteLine("Cleaning up test");
-                    File.Delete(rootPath + fileOut);
+                    if (File.Exists(fileOut))
+                    {
+                        File.Delete(fileOut);
+                    }
                 }
             }
         }
 
+        private void testTextureEveryOneLine(string file, uint x, uint y)
+        {
+            string fileIn = rootPath + file + ".data";
+            string fileOut = rootPath + file + "_out.data";
+
+            DosTerrainParser parser = new DosTerrainParser();
+            DosTerrainWriter writer = new DosTerrainWriter();
+            DosTerrain terrain;
+
+            try
+            {
+                terrain = parser.ReadDosTerrain(x, y, fileIn);
+                terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 1, 0);
+                for (uint j = 0; j < y; j = j + 2)
+                {
+                    for (uint i = 0; i < x; i++)
+                    {
+                        terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, i, j, 0, 255);
+                    }
+                }
+                writer.WriteDosTerrain(terrain, fileOut);
+                terrain = parser.ReadDosTerrain(x, y, fileOut);
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Terrain with dimension x:" + x + ", y:" + y + " couldn't be textured every one line: " + ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Cleaning up test");
+                if (File.Exists(fileOut))
+                {
+                    File.Delete(fileOut);
+                }
+            }
+        }
     }
 }
