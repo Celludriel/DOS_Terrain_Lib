@@ -13,8 +13,7 @@ namespace DosTerrainLib.Helper
 
         public static DosTerrain SetIntensityOnLayerForCoordinate(DosTerrain terrain, UInt32 x, UInt32 y, UInt32 layer, byte value)
         {
-            UInt32 pageIndex = CalculatePageIndex(terrain, x, y);
-            TextureLayerPage page = terrain.TextureLayerPages.ElementAt((int)pageIndex);
+            TextureLayerPage page = FindPageForCoordinate(terrain, x, y);
             foreach (TextureLayerData data in page.Data)
             {
                 if (data.TexturePosition == layer)
@@ -27,6 +26,12 @@ namespace DosTerrainLib.Helper
             return terrain;
         }
 
+        public static TextureLayerPage FindPageForCoordinate(DosTerrain terrain, UInt32 x, UInt32 y)
+        {
+            UInt32 pageIndex = CalculatePageIndex(terrain, x, y);
+            return terrain.TextureLayerPages.ElementAt((int)pageIndex);
+        }
+
         private static uint CalculateIntensityIndex(DosTerrain terrain, UInt32 x, UInt32 y)
         {
             if (terrain.Width < 64 && terrain.Height < 64)
@@ -35,12 +40,10 @@ namespace DosTerrainLib.Helper
             }
             else if (terrain.Width < 64 && terrain.Height >= 127)
             {
-                // don't know yet
                 return (x % (terrain.Width / 2)) + ((y % 32) * (terrain.Width / 2));
             }
             else if (terrain.Width >= 127 && terrain.Height < 64)
             {
-                // don't know yet
                 return (x % 32) + ((y % (terrain.Height / 2)) * 32);
             }
             else
@@ -114,32 +117,45 @@ namespace DosTerrainLib.Helper
             }
             else
             {
-                AddTextureLayerToPage(layer, value, page, backGroundData);
+                AddTextureLayerToPageIfNotExist(layer, value, page, backGroundData);
             }
         }
 
-        private static void AddTextureLayerToPage(UInt32 layer, byte value, TextureLayerPage page, BackgroundData backGroundData)
+        public static void AddTextureLayerToPageIfNotExist(UInt32 layer, byte value, TextureLayerPage page, BackgroundData backGroundData)
         {
-            TextureLayerData data = new TextureLayerData();
-            data.TexturePosition = layer - 1;
-            data.TriangleBytes = backGroundData.TriangleBytes;
-            data.Triangles = new List<Triangle>();
-            data.Triangles.AddRange(backGroundData.Triangles);
-            data.IntensityBytes = data.TriangleBytes / 6;
-            data.Intensities = new List<Intensity>();
-            for (int i = 0; i < data.IntensityBytes / 4; i++)
+
+            TextureLayerData layerToAdd = null;
+            foreach (TextureLayerData data in page.Data)
             {
-                Intensity intensity = new Intensity();
-                SetIntensityTo(value, intensity);
-                data.Intensities.Add(intensity);
+                if (data.TexturePosition == layer)
+                {
+                    layerToAdd = data;
+                }
             }
 
-            if (page.Data == null)
+            if (layerToAdd == null)
             {
-                page.Data = new List<TextureLayerData>();
+                layerToAdd = new TextureLayerData();
+                layerToAdd.TexturePosition = layer;
+                layerToAdd.TriangleBytes = backGroundData.TriangleBytes;
+                layerToAdd.Triangles = new List<Triangle>();
+                layerToAdd.Triangles.AddRange(backGroundData.Triangles);
+                layerToAdd.IntensityBytes = layerToAdd.TriangleBytes / 6;
+                layerToAdd.Intensities = new List<Intensity>();
+                for (int i = 0; i < layerToAdd.IntensityBytes / 4; i++)
+                {
+                    Intensity intensity = new Intensity();
+                    SetIntensityTo(value, intensity);
+                    layerToAdd.Intensities.Add(intensity);
+                }
+
+                if (page.Data == null)
+                {
+                    page.Data = new List<TextureLayerData>();
+                }
+                page.Data.Add(layerToAdd);
+                page.AmountOfLayers = (uint)page.Data.Count;
             }
-            page.Data.Add(data);
-            page.AmountOfLayers = page.AmountOfLayers + 1;
         }
 
         private static void SetIntensitiesTo(List<Intensity> data, byte value)
