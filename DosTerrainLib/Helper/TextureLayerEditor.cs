@@ -28,8 +28,11 @@ namespace DosTerrainLib.Helper
                 if (data.TexturePosition == layer)
                 {
                     UInt32 intensityIndex = CalculateIntensityIndex(terrain, x, y);
-                    Intensity intensity = data.Intensities.ElementAt((int)intensityIndex);
-                    SetIntensityTo(value, intensity, x, y, (int)intensityIndex, page, layer);
+                    if (intensityIndex > 0 && intensityIndex < data.Intensities.Count)
+                    {
+                        Intensity intensity = data.Intensities.ElementAt((int)intensityIndex);
+                        SetIntensityTo(value, intensity, x);
+                    }
                 }
             }
             return terrain;
@@ -45,15 +48,17 @@ namespace DosTerrainLib.Helper
         {
             if (terrain.Width < 64 && terrain.Height < 64)
             {
-                return (x % (terrain.Width / 2)) + ((y % (terrain.Height / 2)) * (terrain.Width / 2));
+                return (UInt32)(x + (y * terrain.Width) / 4);
             }
             else if (terrain.Width < 64 && terrain.Height >= 127)
             {
-                return (x % (terrain.Width / 2)) + ((y % 32) * (terrain.Width / 2));
+                double modY = y % 64;
+                return (UInt32)((x + (modY * terrain.Width)) / 4);
             }
             else if (terrain.Width >= 127 && terrain.Height < 64)
             {
-                return (x % 32) + ((y % (terrain.Height / 2)) * 32);
+                double modX = x % 64;
+                return (UInt32)((modX + (y * 64)) / 4);
             }
             else
             {
@@ -144,26 +149,33 @@ namespace DosTerrainLib.Helper
 
             if (layerToAdd == null)
             {
-                layerToAdd = new TextureLayerData();
-                layerToAdd.TexturePosition = layer;
-                layerToAdd.TriangleBytes = backGroundData.TriangleBytes;
-                layerToAdd.Triangles = new List<Triangle>();
-                layerToAdd.Triangles.AddRange(backGroundData.Triangles);
-                layerToAdd.IntensityBytes = layerToAdd.TriangleBytes / 6;
-                layerToAdd.Intensities = new List<Intensity>();
-                for (int i = 0; i < layerToAdd.IntensityBytes / 4; i++)
-                {
-                    Intensity intensity = new Intensity();
-                    SetIntensityTo(value, intensity);
-                    layerToAdd.Intensities.Add(intensity);
-                }
-
                 if (page.Data == null)
                 {
                     page.Data = new List<TextureLayerData>();
                 }
-                page.Data.Add(layerToAdd);
+
+                page.Data.Add(CreateTextureLayerData(layer, value, backGroundData, layerToAdd));
                 page.AmountOfLayers = (uint)page.Data.Count;
+            }
+
+            return layerToAdd;
+        }
+
+        private static TextureLayerData CreateTextureLayerData(UInt32 layer, byte value, BackgroundData backGroundData, TextureLayerData layerToAdd)
+        {
+            layerToAdd = new TextureLayerData();
+            layerToAdd.TexturePosition = layer;
+            layerToAdd.TriangleBytes = backGroundData.TriangleBytes;
+            layerToAdd.Triangles = new List<Triangle>();
+            layerToAdd.Triangles.AddRange(backGroundData.Triangles);
+            layerToAdd.IntensityBytes = layerToAdd.TriangleBytes / 6;
+            layerToAdd.Intensities = new List<Intensity>();
+            
+            for (int i = 0; i < layerToAdd.IntensityBytes / 4; i++)
+            {
+                Intensity intensity = new Intensity();
+                SetIntensityTo(value, intensity);
+                layerToAdd.Intensities.Add(intensity);
             }
 
             return layerToAdd;
@@ -185,7 +197,7 @@ namespace DosTerrainLib.Helper
             intensity.value4 = value;
         }
 
-        private static void SetIntensityTo(byte value, Intensity intensity, uint modX, uint modY, int intensityIndex, TextureLayerPage page, uint layer)
+        private static void SetIntensityTo(byte value, Intensity intensity, uint modX)
         {
             switch (modX % 4)
             {
