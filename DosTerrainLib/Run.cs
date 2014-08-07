@@ -43,23 +43,14 @@ namespace DosTerrainLib
             
             */
 
-            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\1000by1000ONETEX.data";
-            String outputFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000_out.data";
+            pathToTestFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.data";
+            String outputFile = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_002.data";
             String txtOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.txt";
             String xmlOutput = "C:\\Git\\Repos\\DOS_Terrain_Lib\\DosTerrainLib\\TestData\\Terrain_000.xml";
             new Dump().ReadToEndOfFile(pathToTestFile, txtOutput);
-            terrain = parser.ReadDosTerrain(1000, 1000, pathToTestFile);
+            terrain = parser.ReadDosTerrain(512, 512, pathToTestFile);
             //XMLWrite.WriteXML(terrain, xmlOutput);
-            /*terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 0, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 1, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 2, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 3, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 4, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 5, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 6, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 7, 255);
-            terrain = TextureLayerEditor.SetLayerIntensitiesTo(terrain, 8, 255);*/
-            
+            /*            
             for (uint j = 0; j < 1000; j++)
             {
                 for (uint i = 0; i < 1000; i++)
@@ -71,9 +62,9 @@ namespace DosTerrainLib
                         terrain = TextureLayerEditor.SetIntensityOnLayerForCoordinate(terrain, i, j, layer, 255);
                     }
                 }
-            }
+            }*/
 
-            writer.WriteDosTerrain(terrain, outputFile);
+            //writer.WriteDosTerrain(terrain, outputFile);
 
             /*
 

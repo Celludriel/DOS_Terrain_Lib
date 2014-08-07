@@ -13,6 +13,15 @@ namespace DosTerrainLib.Helper
 
         public static DosTerrain SetIntensityOnLayerForCoordinate(DosTerrain terrain, UInt32 x, UInt32 y, UInt32 layer, byte value)
         {
+            if (x >= terrain.Width)
+            {
+                throw new Exception("X exceeds terrain borders");
+            }
+            else if (y >= terrain.Height)
+            {
+                throw new Exception("Y exceeds terrain borders");
+            }
+
             TextureLayerPage page = FindPageForCoordinate(terrain, x, y);
             foreach (TextureLayerData data in page.Data)
             {
@@ -20,7 +29,7 @@ namespace DosTerrainLib.Helper
                 {
                     UInt32 intensityIndex = CalculateIntensityIndex(terrain, x, y);
                     Intensity intensity = data.Intensities.ElementAt((int)intensityIndex);
-                    SetIntensityTo(value, intensity);
+                    SetIntensityTo(value, intensity, x, y, (int)intensityIndex, page, layer);
                 }
             }
             return terrain;
@@ -48,7 +57,9 @@ namespace DosTerrainLib.Helper
             }
             else
             {
-                return (x % 32) + ((y % 32) * 32);
+                double modX = x % 64;
+                double modY = y % 64;
+                return (UInt32)((modX + (modY * 64)) / 4);
             }
         }
 
@@ -70,12 +81,10 @@ namespace DosTerrainLib.Helper
             {
                 UInt32 maxWidthPages = (UInt32)Math.Floor(terrain.Width / 64.0);
                 UInt32 maxHeightPages = (UInt32)Math.Floor(terrain.Height / 64.0);
-                UInt32 maxWidth = maxWidthPages * 64;
-                UInt32 maxHeight = maxHeightPages * 64;
-                UInt32 xMod = (UInt32)((x / (double)terrain.Width) * maxWidth);
-                UInt32 yMod = (UInt32)((y / (double)terrain.Height) * maxHeight);
+                UInt32 xMod = (UInt32)((x / (double)terrain.Width) * maxWidthPages);
+                UInt32 yMod = (UInt32)((y / (double)terrain.Height) * maxHeightPages);
 
-                return Convert.ToUInt32((xMod / 64) + ((yMod / 64) * Math.Floor((maxWidth / 64.0))));
+                return xMod + (yMod * maxWidthPages);
             }
         }
 
@@ -105,23 +114,23 @@ namespace DosTerrainLib.Helper
 
         private static void SetIntensitiesForTextureLayerPage(UInt32 layer, byte value, TextureLayerPage page, BackgroundData backGroundData)
         {
-            if (layer <= page.AmountOfLayers)
+            TextureLayerData textureLayerData = null;
+            foreach (TextureLayerData data in page.Data)
             {
-                foreach (TextureLayerData data in page.Data)
+                if (data.TexturePosition == (layer - 1))
                 {
-                    if (data.TexturePosition == (layer - 1))
-                    {
-                        SetIntensitiesTo(data.Intensities, value);
-                    }
+                    textureLayerData = data;
                 }
             }
-            else
+
+            if (textureLayerData == null)
             {
-                AddTextureLayerToPageIfNotExist(layer, value, page, backGroundData);
+                textureLayerData = AddTextureLayerToPageIfNotExist(layer, value, page, backGroundData);
             }
+            SetIntensitiesTo(textureLayerData.Intensities, value);
         }
 
-        public static void AddTextureLayerToPageIfNotExist(UInt32 layer, byte value, TextureLayerPage page, BackgroundData backGroundData)
+        public static TextureLayerData AddTextureLayerToPageIfNotExist(UInt32 layer, byte value, TextureLayerPage page, BackgroundData backGroundData)
         {
 
             TextureLayerData layerToAdd = null;
@@ -156,6 +165,8 @@ namespace DosTerrainLib.Helper
                 page.Data.Add(layerToAdd);
                 page.AmountOfLayers = (uint)page.Data.Count;
             }
+
+            return layerToAdd;
         }
 
         private static void SetIntensitiesTo(List<Intensity> data, byte value)
@@ -172,6 +183,17 @@ namespace DosTerrainLib.Helper
             intensity.value2 = value;
             intensity.value3 = value;
             intensity.value4 = value;
+        }
+
+        private static void SetIntensityTo(byte value, Intensity intensity, uint modX, uint modY, int intensityIndex, TextureLayerPage page, uint layer)
+        {
+            switch (modX % 4)
+            {
+                case 0: intensity.value1 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
+                case 1: intensity.value2 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
+                case 2: intensity.value3 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
+                case 3: intensity.value4 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
+            }
         }
     }
 }
