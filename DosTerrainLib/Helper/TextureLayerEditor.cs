@@ -189,10 +189,10 @@ namespace DosTerrainLib.Helper
         {
             switch (modX % 4)
             {
-                case 0: intensity.value1 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
-                case 1: intensity.value2 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
-                case 2: intensity.value3 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
-                case 3: intensity.value4 = value; sw.WriteLine("page: " + page.PageNo + ", index: " + intensityIndex + ", layer: " + layer + ", intensity 1: " + value + ", coord: " + modX + " , " + modY); break;
+                case 0: intensity.value1 = value; break;
+                case 1: intensity.value2 = value; break;
+                case 2: intensity.value3 = value; break;
+                case 3: intensity.value4 = value; break;
             }
         }
     }
